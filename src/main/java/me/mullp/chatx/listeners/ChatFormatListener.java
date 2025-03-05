@@ -3,19 +3,25 @@ package me.mullp.chatx.listeners;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.mullp.chatx.ChatX;
+import me.mullp.chatx.tags.placeholders.ItemPlaceholder;
+import me.mullp.chatx.tags.placeholders.MessagePlaceholder;
+import me.mullp.chatx.tags.placeholders.NamePlaceholder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 public class ChatFormatListener implements Listener, ChatRenderer {
     private final MiniMessage miniMessage = MiniMessage.builder()
-            .tags(StandardTags.color())
+            .tags(StandardTags.defaults())
             .build();
 
     @EventHandler
@@ -29,7 +35,9 @@ public class ChatFormatListener implements Listener, ChatRenderer {
                             @NotNull Component sourceDisplayName,
                             @NotNull Component message,
                             @NotNull Audience viewer) {
-        String format = ChatX.getInstance().getConfig().getString("format");
+        FileConfiguration config = ChatX.getInstance().getConfig();
+
+        String format = config.getString("format");
         if (format == null) {
             return Component.text()
                     .append(sourceDisplayName)
@@ -38,8 +46,32 @@ public class ChatFormatListener implements Listener, ChatRenderer {
                     .build();
         }
 
+        PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
+        for (Map<?, ?> placeholder : config.getMapList("placeholders")) {
+            String name = placeholder.get("name").toString();
+
+            if (!plainTextComponentSerializer.serialize(message).contains(name)) {
+                continue;
+            }
+
+            message = message.replaceText(builder -> builder
+                    .matchLiteral(name)
+                    .replacement(getMessageDeserialized(placeholder.get("value").toString(), source)));
+        }
+
+        return getDeserialized(format, source, sourceDisplayName, message);
+    }
+
+    private @NotNull Component getDeserialized(@NotNull String format, @NotNull Player source, @NotNull Component sourceDisplayName, @NotNull Component message) {
         return miniMessage.deserialize(format,
-                Placeholder.component("name", sourceDisplayName),
-                Placeholder.component("message", message));
+                new NamePlaceholder(sourceDisplayName),
+                new ItemPlaceholder(source.getInventory().getItemInMainHand()),
+                new MessagePlaceholder(message));
+    }
+
+    private @NotNull Component getMessageDeserialized(@NotNull String format, @NotNull Player source) {
+        return miniMessage.deserialize(format,
+                new NamePlaceholder(source),
+                new ItemPlaceholder(source.getInventory().getItemInMainHand()));
     }
 }

@@ -1,1 +1,19 @@
 format: "<name>: <message>"
+
+placeholders:
+  - name: "[item]"
+    value: "[<item>]"
+    autocomplete: true
+  - name: ":skull:"
+    value: "<gray>☠</gray>"
+    autocomplete: true
+  - name: ":heart:"
+    value: "<red>❤</red>"
+    autocomplete: true
+  - name: ":fire:"
+    value: "<gold>🔥</gold>"
+    autocomplete: true
+  - name: ":)"
+    value: "☺"
+  - name: ":("
+    value: "☹"
