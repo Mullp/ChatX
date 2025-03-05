@@ -5,6 +5,7 @@ import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.mullp.chatx.commands.ChatXCommand;
 
+@SuppressWarnings("unused")
 public class ChatXBootstrap implements PluginBootstrap {
     @Override
     public void bootstrap(BootstrapContext context) {
