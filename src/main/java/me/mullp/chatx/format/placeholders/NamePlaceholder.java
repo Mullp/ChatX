@@ -1,4 +1,4 @@
-package me.mullp.chatx.tags.placeholders;
+package me.mullp.chatx.format.placeholders;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -10,6 +10,6 @@ public class NamePlaceholder extends AbstractPlaceholder {
     }
 
     public NamePlaceholder(@NotNull Player player) {
-        this(player.displayName());
+        this(Component.text(player.getName()));
     }
 }

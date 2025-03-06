@@ -1,4 +1,4 @@
-package me.mullp.chatx.tags.placeholders;
+package me.mullp.chatx.format.placeholders;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;

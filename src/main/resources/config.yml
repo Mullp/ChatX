@@ -1,5 +1,8 @@
 format: "<name>: <message>"
 
+mentions: true
+mentions-format: "<#ffeb00>@<name></#ffeb00>"
+
 placeholders:
   - name: "[item]"
     value: "[<item>]"
@@ -11,7 +14,7 @@ placeholders:
     value: "<red>❤</red>"
     autocomplete: true
   - name: ":fire:"
-    value: "<gold>🔥</gold>"
+    value: "<#ff5a00>🔥</#ff5a00>"
     autocomplete: true
   - name: ":)"
     value: "☺"

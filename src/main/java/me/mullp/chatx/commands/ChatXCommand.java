@@ -6,7 +6,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.mullp.chatx.ChatX;
-import me.mullp.chatx.tags.TabCompletions;
+import me.mullp.chatx.format.TabCompletions;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 

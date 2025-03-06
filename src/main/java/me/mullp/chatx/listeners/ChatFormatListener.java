@@ -3,9 +3,10 @@ package me.mullp.chatx.listeners;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.mullp.chatx.ChatX;
-import me.mullp.chatx.tags.placeholders.ItemPlaceholder;
-import me.mullp.chatx.tags.placeholders.MessagePlaceholder;
-import me.mullp.chatx.tags.placeholders.NamePlaceholder;
+import me.mullp.chatx.format.ChatFormatter;
+import me.mullp.chatx.format.placeholders.ItemPlaceholder;
+import me.mullp.chatx.format.placeholders.MessagePlaceholder;
+import me.mullp.chatx.format.placeholders.NamePlaceholder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -56,7 +57,7 @@ public class ChatFormatListener implements Listener, ChatRenderer {
 
             message = message.replaceText(builder -> builder
                     .matchLiteral(name)
-                    .replacement(getMessageDeserialized(placeholder.get("value").toString(), source)));
+                    .replacement(ChatFormatter.deserializePlaceholders(placeholder.get("value").toString(), source)));
         }
 
         return getDeserialized(format, source, sourceDisplayName, message);
@@ -69,9 +70,9 @@ public class ChatFormatListener implements Listener, ChatRenderer {
                 new MessagePlaceholder(message));
     }
 
-    private @NotNull Component getMessageDeserialized(@NotNull String format, @NotNull Player source) {
-        return miniMessage.deserialize(format,
-                new NamePlaceholder(source),
-                new ItemPlaceholder(source.getInventory().getItemInMainHand()));
-    }
+//    private @NotNull Component getMessageDeserialized(@NotNull String format, @NotNull Player source) {
+//        return miniMessage.deserialize(format,
+//                new NamePlaceholder(source),
+//                new ItemPlaceholder(source.getInventory().getItemInMainHand()));
+//    }
 }

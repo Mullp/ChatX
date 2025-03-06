@@ -1,4 +1,4 @@
-package me.mullp.chatx.tags;
+package me.mullp.chatx.format;
 
 import me.mullp.chatx.ChatX;
 import org.bukkit.configuration.file.FileConfiguration;
