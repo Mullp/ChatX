@@ -1,7 +1,7 @@
 package me.mullp.chatx;
 
 import me.mullp.chatx.listeners.ChatCompletionListener;
-import me.mullp.chatx.listeners.ChatDecorateListener;
+import me.mullp.chatx.listeners.ChatMentionListener;
 import me.mullp.chatx.listeners.ChatFormatListener;
 import me.mullp.chatx.format.TabCompletions;
 import org.bukkit.event.HandlerList;
@@ -27,19 +27,24 @@ public final class ChatX extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
-        PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(new ChatFormatListener(), this);
-        pluginManager.registerEvents(new ChatCompletionListener(), this);
-
-        if (getConfig().getBoolean("mentions", false)) {
-            pluginManager.registerEvents(new ChatDecorateListener(), this);
-        }
+        registerEvents();
 
         TAB_COMPLETIONS.reloadCompletions();
+        TAB_COMPLETIONS.setCompletions(this.getServer().getOnlinePlayers());
     }
 
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
+    }
+
+    private void registerEvents() {
+        PluginManager pluginManager = this.getServer().getPluginManager();
+        pluginManager.registerEvents(new ChatFormatListener(), this);
+        pluginManager.registerEvents(new ChatCompletionListener(), this);
+
+        if (getConfig().getBoolean("mentions", false)) {
+            pluginManager.registerEvents(new ChatMentionListener(), this);
+        }
     }
 }
