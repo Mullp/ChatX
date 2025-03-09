@@ -3,19 +3,19 @@ format: "<name>: <message>"
 mentions: true
 mentions-format: "<#ffeb00>@<name></#ffeb00>"
 
-placeholders:
+replacements:
   - name: "[item]"
     value: "[<item>]"
-    autocomplete: true
+    auto-complete: true
   - name: ":skull:"
     value: "<gray>☠</gray>"
-    autocomplete: true
+    auto-complete: true
   - name: ":heart:"
     value: "<red>❤</red>"
-    autocomplete: true
+    auto-complete: true
   - name: ":fire:"
     value: "<#ff5a00>🔥</#ff5a00>"
-    autocomplete: true
+    auto-complete: true
   - name: ":)"
     value: "☺"
   - name: ":("

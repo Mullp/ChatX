@@ -48,7 +48,7 @@ public class ChatFormatListener implements Listener, ChatRenderer {
         }
 
         PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
-        for (Map<?, ?> placeholder : config.getMapList("placeholders")) {
+        for (Map<?, ?> placeholder : config.getMapList("replacements")) {
             String name = placeholder.get("name").toString();
 
             if (!plainTextComponentSerializer.serialize(message).contains(name)) {
@@ -69,10 +69,4 @@ public class ChatFormatListener implements Listener, ChatRenderer {
                 new ItemPlaceholder(source.getInventory().getItemInMainHand()),
                 new MessagePlaceholder(message));
     }
-
-//    private @NotNull Component getMessageDeserialized(@NotNull String format, @NotNull Player source) {
-//        return miniMessage.deserialize(format,
-//                new NamePlaceholder(source),
-//                new ItemPlaceholder(source.getInventory().getItemInMainHand()));
-//    }
 }

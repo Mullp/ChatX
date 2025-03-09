@@ -18,9 +18,9 @@ public class TabCompletions {
     public void reloadCompletions() {
         FileConfiguration config = ChatX.getInstance().getConfig();
 
-        completions = config.getMapList("placeholders").stream()
+        completions = config.getMapList("replacements").stream()
                 .filter(map -> {
-                    Object autocomplete = map.get("autocomplete");
+                    Object autocomplete = map.get("auto-complete");
                     if (autocomplete == null) {
                         return false;
                     }
