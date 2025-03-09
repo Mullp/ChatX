@@ -1,4 +1,5 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
+import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
     id("java")
@@ -15,10 +16,15 @@ repositories {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+    maven {
+        name = "extendedclip"
+        url = uri("https://repo.extendedclip.com/releases/")
+    }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 
 java {
@@ -42,8 +48,18 @@ paper {
     description = "The Chat plugin for managing your chat."
     apiVersion = "1.21"
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
+    serverDependencies {
+        register("PlaceholderAPI") {
+            required = false
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+        }
+    }
 }
 
 tasks.runServer {
     minecraftVersion("1.21.4")
+
+    downloadPlugins {
+        hangar("PlaceholderAPI", "2.11.6")
+    }
 }

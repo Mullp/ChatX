@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ChatMentionListener implements Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onChatMention(@NotNull AsyncChatDecorateEvent event) {
         Player source = event.player();
         if (source == null) {

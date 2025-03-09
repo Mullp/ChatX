@@ -4,6 +4,7 @@ import me.mullp.chatx.listeners.ChatCompletionListener;
 import me.mullp.chatx.listeners.ChatMentionListener;
 import me.mullp.chatx.listeners.ChatFormatListener;
 import me.mullp.chatx.format.TabCompletions;
+import me.mullp.chatx.listeners.ChatReplacementsListener;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,5 +47,7 @@ public final class ChatX extends JavaPlugin {
         if (getConfig().getBoolean("mentions", false)) {
             pluginManager.registerEvents(new ChatMentionListener(), this);
         }
+
+        pluginManager.registerEvents(new ChatReplacementsListener(), this);
     }
 }

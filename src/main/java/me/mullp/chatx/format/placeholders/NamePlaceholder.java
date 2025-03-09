@@ -10,6 +10,6 @@ public class NamePlaceholder extends AbstractPlaceholder {
     }
 
     public NamePlaceholder(@NotNull Player player) {
-        this(Component.text(player.getName()));
+        this(player.displayName());
     }
 }
