@@ -1,11 +1,28 @@
+### Message formats ###
+# Note: Leave empty to not change the format.
+
+# Chat message format
 format: "<name>: <message>"
 
+# Join and leave message formats
+join-format: "<#00ff00><b>+</b></#00ff00> <name>"
+leave-format: "<#ff0000>-</#ff0000> <name>"
+
+
+### Messages ###
+# The message show to the player when they join
+join-message: "<#FF5A00>🔥</#FF5A00> Welcome <name> to the server!"
+
+
+### Mentions ###
 mentions: true
 mentions-format: "<#ffeb00>@<name></#ffeb00>"
 
-replacements:
+
+### Placeholders ###
+placeholders:
   - name: "[item]"
-    value: "[<item>]"
+    value: "<yellow>[<item>]</yellow>"
     auto-complete: true
   - name: ":skull:"
     value: "<gray>☠</gray>"

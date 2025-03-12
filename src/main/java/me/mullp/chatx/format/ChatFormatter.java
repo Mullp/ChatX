@@ -39,7 +39,7 @@ public class ChatFormatter {
     /**
      * Deserializes most of the placeholders that only needs information about the player.
      * Currently, this is the {@link NamePlaceholder} and {@link ItemPlaceholder}.
-     * 
+     *
      * @param string The string to deserialize
      * @param player The relevant player
      * @return The deserialized string as a component
@@ -52,6 +52,6 @@ public class ChatFormatter {
 
         return MINI_MESSAGE.deserialize(string,
                 new NamePlaceholder(player),
-                new ItemPlaceholder(player.getInventory().getItemInMainHand()));
+                new ItemPlaceholder(player));
     }
 }

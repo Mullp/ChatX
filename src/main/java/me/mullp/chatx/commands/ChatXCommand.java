@@ -9,28 +9,25 @@ import me.mullp.chatx.ChatX;
 import me.mullp.chatx.format.TabCompletions;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 public class ChatXCommand {
     private final LiteralCommandNode<CommandSourceStack> command = Commands.literal("chatx")
+            .requires(sender -> sender.getSender().hasPermission("chatx.commands"))
             .then(Commands.literal("reload")
-                    .requires(sender -> sender.getSender().hasPermission("chatx.reload"))
+                    .requires(sender -> sender.getSender().hasPermission("chatx.commands.reload"))
                     .executes(this::reload))
-            .then(Commands.literal("about").executes(context -> {
-                context.getSource().getSender().sendMessage("Version 1.0.0");
-
-                return Command.SINGLE_SUCCESS;
-            }))
             .build();
 
     public LiteralCommandNode<CommandSourceStack> getCommand() {
         return command;
     }
 
-    private int reload(CommandContext<CommandSourceStack> context) {
+    private int reload(@NotNull CommandContext<CommandSourceStack> context) {
         ChatX.getInstance().reloadConfig();
 
         CommandSender sender = context.getSource().getSender();
-        sender.sendMessage(Component.translatable("commands.reload.success"));
+        sender.sendMessage(Component.text("Reloading ChatX!"));
 
         TabCompletions tabCompletions = ChatX.getTabCompletions();
         tabCompletions.reloadCompletions();

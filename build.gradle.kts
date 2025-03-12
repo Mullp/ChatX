@@ -5,6 +5,7 @@ plugins {
     id("java")
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("de.eldoria.plugin-yml.paper") version "0.7.1"
+    id("com.gradleup.shadow") version "9.0.0-beta10"
 }
 
 group = "me.mullp"
@@ -25,10 +26,28 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
 }
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+tasks.compileJava {
+    options.encoding = Charsets.UTF_8.name()
+    options.release = 21
+}
+
+tasks.shadowJar {
+    dependencies {
+        relocate("org.bstats", "me.mullp.chatx.libs")
+    }
+
+    archiveBaseName.set("ChatX")
+    archiveVersion.set(project.version.toString())
+    archiveClassifier.set("")
+
+    minimize()
 }
 
 tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
@@ -40,13 +59,13 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
 }
 
 paper {
-    main = "me.mullp.chatx.ChatX"
-    bootstrapper = "me.mullp.chatx.ChatXBootstrap"
     name = "ChatX"
     author = "Mullp"
     version = project.version.toString()
     description = "The Chat plugin for managing your chat."
     apiVersion = "1.21"
+    main = "me.mullp.chatx.ChatX"
+    bootstrapper = "me.mullp.chatx.ChatXBootstrap"
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
     serverDependencies {
         register("PlaceholderAPI") {
@@ -61,5 +80,6 @@ tasks.runServer {
 
     downloadPlugins {
         hangar("PlaceholderAPI", "2.11.6")
+        url("https://download.luckperms.net/1573/bukkit/loader/LuckPerms-Bukkit-5.4.156.jar")
     }
 }
