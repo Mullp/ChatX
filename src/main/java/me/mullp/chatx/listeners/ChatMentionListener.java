@@ -25,8 +25,8 @@ public class ChatMentionListener implements Listener {
         }
 
         FileConfiguration config = ChatX.getInstance().getConfig();
-        String format = config.getString("mentions-format");
-        if (format == null) {
+        String format = config.getString("mentions-format", "");
+        if (format.isBlank()) {
             return;
         }
 

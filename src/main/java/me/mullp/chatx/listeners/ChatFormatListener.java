@@ -6,15 +6,20 @@ import me.mullp.chatx.ChatX;
 import me.mullp.chatx.format.ChatFormatter;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatFormatListener implements Listener, ChatRenderer {
+    private final static ChatX PLUGIN = ChatX.getInstance();
+
     @EventHandler
     public void onChatFormat(@NotNull AsyncChatEvent event) {
+        if (PLUGIN.getConfig().getString("format", "").isBlank()) {
+            return;
+        }
+
         event.renderer(this);
     }
 
@@ -24,9 +29,7 @@ public class ChatFormatListener implements Listener, ChatRenderer {
                             @NotNull Component sourceDisplayName,
                             @NotNull Component message,
                             @NotNull Audience viewer) {
-        FileConfiguration config = ChatX.getInstance().getConfig();
-
-        String format = config.getString("format", "<name>: <message>");
+        String format = PLUGIN.getConfig().getString("format", "<name>: <message>");
 
         return ChatFormatter.deserializeMessage(format, source, message);
     }

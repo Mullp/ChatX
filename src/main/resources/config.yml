@@ -1,6 +1,6 @@
-### Message formats ###
-# Note: Leave empty to not change the format.
+# Note: Leave fields empty to not change the format
 
+### Messages ###
 # Chat message format
 format: "<name>: <message>"
 
@@ -8,18 +8,28 @@ format: "<name>: <message>"
 join-format: "<#00ff00><b>+</b></#00ff00> <name>"
 leave-format: "<#ff0000>-</#ff0000> <name>"
 
-
-### Messages ###
 # The message show to the player when they join
-join-message: "<#FF5A00>🔥</#FF5A00> Welcome <name> to the server!"
+join-message: "<#FF5A00>🔥</#FF5A00> Welcome to the server <name>!"
 
 
 ### Mentions ###
+# Enable or disable mentions
 mentions: true
+# Mentions message format
 mentions-format: "<#ffeb00>@<name></#ffeb00>"
 
 
 ### Placeholders ###
+# Placeholders are replacements in chat messages
+# The format of a placeholder is:
+# - name           (what to replace)
+# - value          (what to replace with)
+# - auto-complete  (whether to auto-complete using tab in the chat)
+#
+# Example of a placeholder that auto-completes could be:
+# - name: ":fire:"
+#   value: "<#ff5a00>🔥</#ff5a00>"
+#   auto-complete: true
 placeholders:
   - name: "[item]"
     value: "<yellow>[<item>]</yellow>"
@@ -37,3 +47,9 @@ placeholders:
     value: "☺"
   - name: ":("
     value: "☹"
+
+# Whether to show the name of the replacement when no hover is provided
+#
+# Hovering the example placeholder will show the name ":fire:",
+# but hovering a placeholder that uses e.g., "<item>" will not
+name-on-hover: true

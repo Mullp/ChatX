@@ -1,6 +1,6 @@
 package me.mullp.chatx;
 
-import me.mullp.chatx.format.TabCompletions;
+import me.mullp.chatx.format.ChatTabCompletions;
 import me.mullp.chatx.listeners.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.event.HandlerList;
@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nullable;
 
 public final class ChatX extends JavaPlugin {
-    private static final TabCompletions TAB_COMPLETIONS = new TabCompletions();
+    private static final ChatTabCompletions TAB_COMPLETIONS = new ChatTabCompletions();
     private static ChatX INSTANCE;
     private @Nullable Metrics metrics;
 
@@ -21,7 +21,7 @@ public final class ChatX extends JavaPlugin {
         return INSTANCE;
     }
 
-    public static TabCompletions getTabCompletions() {
+    public static ChatTabCompletions getTabCompletions() {
         return TAB_COMPLETIONS;
     }
 
@@ -31,8 +31,8 @@ public final class ChatX extends JavaPlugin {
 
         registerEvents();
 
-        TAB_COMPLETIONS.reloadCompletions();
-        TAB_COMPLETIONS.setCompletions(this.getServer().getOnlinePlayers());
+        TAB_COMPLETIONS.reloadChatCompletions();
+        TAB_COMPLETIONS.setChatCompletions(this.getServer().getOnlinePlayers());
 
         metrics = new Metrics(this, 25058);
     }
@@ -57,8 +57,8 @@ public final class ChatX extends JavaPlugin {
 
         pluginManager.registerEvents(new ChatPlaceholderListener(), this);
 
-        if (!getConfig().getString("join-format", "").isEmpty()
-                || !getConfig().getString("leave-format", "").isEmpty()) {
+        if (!getConfig().getString("join-format", "").isBlank()
+                || !getConfig().getString("leave-format", "").isBlank()) {
             pluginManager.registerEvents(new ConnectionListener(), this);
         }
     }

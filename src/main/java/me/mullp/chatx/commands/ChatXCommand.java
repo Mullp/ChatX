@@ -6,7 +6,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.mullp.chatx.ChatX;
-import me.mullp.chatx.format.TabCompletions;
+import me.mullp.chatx.format.ChatTabCompletions;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -29,9 +29,9 @@ public class ChatXCommand {
         CommandSender sender = context.getSource().getSender();
         sender.sendMessage(Component.text("Reloading ChatX!"));
 
-        TabCompletions tabCompletions = ChatX.getTabCompletions();
-        tabCompletions.reloadCompletions();
-        tabCompletions.setCompletions(sender.getServer().getOnlinePlayers());
+        ChatTabCompletions tabCompletions = ChatX.getTabCompletions();
+        tabCompletions.reloadChatCompletions();
+        tabCompletions.setChatCompletions(sender.getServer().getOnlinePlayers());
 
         return Command.SINGLE_SUCCESS;
     }

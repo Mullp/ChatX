@@ -9,6 +9,6 @@ import org.jetbrains.annotations.NotNull;
 public class ChatCompletionListener implements Listener {
     @EventHandler
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-        ChatX.getTabCompletions().setCompletions(event.getPlayer());
+        ChatX.getTabCompletions().setChatCompletions(event.getPlayer());
     }
 }

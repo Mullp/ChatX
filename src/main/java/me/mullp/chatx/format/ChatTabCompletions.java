@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class TabCompletions {
+public class ChatTabCompletions {
     private List<String> completions = List.of();
 
-    public void reloadCompletions() {
+    public void reloadChatCompletions() {
         FileConfiguration config = ChatX.getInstance().getConfig();
 
         completions = config.getMapList("placeholders").stream()
@@ -26,11 +26,11 @@ public class TabCompletions {
                 .toList();
     }
 
-    public void setCompletions(@NotNull Player player) {
+    public void setChatCompletions(@NotNull Player player) {
         player.setCustomChatCompletions(completions);
     }
 
-    public void setCompletions(@NotNull Collection<? extends Player> players) {
-        players.forEach(this::setCompletions);
+    public void setChatCompletions(@NotNull Collection<? extends Player> players) {
+        players.forEach(this::setChatCompletions);
     }
 }

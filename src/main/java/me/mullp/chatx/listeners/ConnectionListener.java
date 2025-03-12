@@ -13,10 +13,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.concurrent.TimeUnit;
 
 public class ConnectionListener implements Listener {
+    private final static ChatX PLUGIN = ChatX.getInstance();
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoinFormat(PlayerJoinEvent event) {
-        String format = ChatX.getInstance().getConfig().getString("join-format", "");
-        if (format.isEmpty()) {
+        String format = PLUGIN.getConfig().getString("join-format", "");
+        if (format.isBlank()) {
             return;
         }
 
@@ -25,26 +27,26 @@ public class ConnectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerLeaveFormat(PlayerQuitEvent event) {
-        String format = ChatX.getInstance().getConfig().getString("leave-format", "");
-        if (format.isEmpty()) {
+        String format = PLUGIN.getConfig().getString("leave-format", "");
+        if (format.isBlank()) {
             return;
         }
 
         event.quitMessage(ChatFormatter.deserializePlaceholders(format, event.getPlayer()));
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler
     public void onPlayerJoinMessage(PlayerJoinEvent event) {
-        String format = ChatX.getInstance().getConfig().getString("join-message", "");
-        if (format.isEmpty()) {
+        String format = PLUGIN.getConfig().getString("join-message", "");
+        if (format.isBlank()) {
             return;
         }
 
         Player player = event.getPlayer();
 
         // Delay message 1 tick to avoid being sent before the global join message
-        AsyncScheduler asyncScheduler = ChatX.getInstance().getServer().getAsyncScheduler();
-        asyncScheduler.runDelayed(ChatX.getInstance(), task -> {
+        AsyncScheduler asyncScheduler = PLUGIN.getServer().getAsyncScheduler();
+        asyncScheduler.runDelayed(PLUGIN, task -> {
             player.sendMessage(ChatFormatter.deserializePlaceholders(format, player));
         }, 50, TimeUnit.MILLISECONDS);
     }

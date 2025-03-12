@@ -31,7 +31,7 @@ public class ChatPlaceholderListener implements Listener {
                 String name = placeholder.get("name").toString();
                 Component replacement = ChatFormatter.deserializePlaceholders(placeholder.get("value").toString(), source);
 
-                if (replacement.hoverEvent() == null) {
+                if (config.getBoolean("name-on-hover", true) && replacement.hoverEvent() == null) {
                     replacement = replacement.hoverEvent(HoverEvent.showText(Component.text(name)
                             .color(TextColor.color(0xc0c0c0))));
                 }
