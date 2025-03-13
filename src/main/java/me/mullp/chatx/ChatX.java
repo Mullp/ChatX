@@ -34,16 +34,14 @@ public final class ChatX extends JavaPlugin {
         TAB_COMPLETIONS.reloadChatCompletions();
         TAB_COMPLETIONS.setChatCompletions(this.getServer().getOnlinePlayers());
 
-        metrics = new Metrics(this, 25058);
+        if (metrics == null) {
+            metrics = new Metrics(this, 25058);
+        }
     }
 
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
-
-        if (metrics != null) {
-            metrics.shutdown();
-        }
     }
 
     private void registerEvents() {
@@ -51,7 +49,7 @@ public final class ChatX extends JavaPlugin {
         pluginManager.registerEvents(new ChatFormatListener(), this);
         pluginManager.registerEvents(new ChatCompletionListener(), this);
 
-        if (getConfig().getBoolean("mentions", false)) {
+        if (getConfig().getBoolean("mentions")) {
             pluginManager.registerEvents(new ChatMentionListener(), this);
         }
 
@@ -60,6 +58,10 @@ public final class ChatX extends JavaPlugin {
         if (!getConfig().getString("join-format", "").isBlank()
                 || !getConfig().getString("leave-format", "").isBlank()) {
             pluginManager.registerEvents(new ConnectionListener(), this);
+        }
+
+        if (getConfig().getBoolean("proximity-chat")) {
+            pluginManager.registerEvents(new ChatProximityListener(), this);
         }
     }
 }

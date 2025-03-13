@@ -6,12 +6,12 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.mullp.chatx.ChatX;
-import me.mullp.chatx.format.ChatTabCompletions;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatXCommand {
+    private final static ChatX PLUGIN = ChatX.getInstance();
     private final LiteralCommandNode<CommandSourceStack> command = Commands.literal("chatx")
             .requires(sender -> sender.getSender().hasPermission("chatx.commands"))
             .then(Commands.literal("reload")
@@ -24,14 +24,13 @@ public class ChatXCommand {
     }
 
     private int reload(@NotNull CommandContext<CommandSourceStack> context) {
-        ChatX.getInstance().reloadConfig();
+        PLUGIN.reloadConfig();
 
         CommandSender sender = context.getSource().getSender();
         sender.sendMessage(Component.text("Reloading ChatX!"));
 
-        ChatTabCompletions tabCompletions = ChatX.getTabCompletions();
-        tabCompletions.reloadChatCompletions();
-        tabCompletions.setChatCompletions(sender.getServer().getOnlinePlayers());
+        PLUGIN.onDisable();
+        PLUGIN.onEnable();
 
         return Command.SINGLE_SUCCESS;
     }

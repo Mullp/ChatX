@@ -53,3 +53,11 @@ placeholders:
 # Hovering the example placeholder will show the name ":fire:",
 # but hovering a placeholder that uses e.g., "<item>" will not
 name-on-hover: true
+
+### Proximity chat ###
+# Enable or disable proximity chat
+proximity-chat: false
+# The range of the proximity chat
+proximity-range: 128
+# Global chat prefix, leave empty for no global chat
+global-chat-prefix: "!"
